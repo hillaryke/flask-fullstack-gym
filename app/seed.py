@@ -1,7 +1,21 @@
 from random import choice as rc
 from faker import Faker
-from app import app
-from models import db, Exercise, Member
+from app import app, db  # Import the 'db' from your Flask app
+from models import Exercise, Member
+import requests
+
+def fetch_data_from_api():
+    muscle = 'biceps'
+    api_url = 'https://api.api-ninjas.com/v1/exercises?muscle={}'.format(muscle)
+    response = requests.get(api_url, headers={'X-Api-Key': 'iUot3Px10NcYQadCWz/qJQ==GsNy1hGoaGHhT2V1'})
+    if response.status_code == requests.codes.ok:
+        return response.json()  # Return the JSON data from the API response
+    else:
+        print("Error:", response.status_code, response.text)
+        return []  # Return an empty list in case of an error
+
+# Ensure you fetch the data before creating fake data
+items = fetch_data_from_api()
 
 fake = Faker()
 
@@ -45,14 +59,14 @@ with app.app_context():
         exercises = []
 
         # Create 5 Exercise instances for each member
-        for _ in range(5):  # Loop through the desired number of exercises per member
+        for item in items:  # Loop through the fetched exercise data
             exercise = Exercise(
-                name=fake.name(),
-                type=fake.word(),
-                muscle=fake.word(),
-                equipment=fake.word(),
-                difficulty=fake.word(),
-                instructions=fake.sentence(),
+                name=item.get('name'),  # Access data using 'get'
+                type=item.get('type'),
+                muscle=item.get('muscle'),
+                equipment=item.get('equipment'),  # Correct the typo 'equipement'
+                difficulty=item.get('difficulty'),
+                instructions=item.get('instructions'),
                 member=member  # Associate the exercise with the member
             )
             exercises.append(exercise)
