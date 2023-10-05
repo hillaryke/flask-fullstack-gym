@@ -5,8 +5,7 @@ from models import Exercise, Member
 import requests
 
 def fetch_data_from_api():
-    muscle = 'biceps'
-    api_url = 'https://api.api-ninjas.com/v1/exercises?muscle={}'.format(muscle)
+    api_url = 'https://api.api-ninjas.com/v1/exercises?'
     response = requests.get(api_url, headers={'X-Api-Key': 'iUot3Px10NcYQadCWz/qJQ==GsNy1hGoaGHhT2V1'})
     if response.status_code == requests.codes.ok:
         return response.json()  # Return the JSON data from the API response
