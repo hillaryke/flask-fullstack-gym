@@ -1,28 +1,22 @@
 import { Switch, Route } from "react-router-dom";
-import Header from "./Header";
-import Hero from "./Hero";
-import Home from "./Home";
-import HeroPowerForm from "./HeroPowerForm";
-import Power from "./Power";
-import PowerEditForm from "./PowerEditForm";
+import Signup from "./Signup";
+import Signin from "./Signin";
+import Exercises from "./Exercises";
 
 function App() {
   return (
     <div>
-      <Header />
+      
       <main>
         <Switch>
-          <Route exact path="/hero_powers/new">
-            <HeroPowerForm />
+        <Route exact path="/exercises">
+            <Exercises />
           </Route>
-          <Route exact path="/powers/:id/edit">
-            <PowerEditForm />
+        <Route exact path="/signin">
+            <Signin />
           </Route>
-          <Route exact path="/powers/:id">
-            <Power />
-          </Route>
-          <Route exact path="/heroes/:id">
-            <Hero />
+          <Route exact path="/signup">
+            <Signup />
           </Route>
           <Route exact path="/">
             <Home />
